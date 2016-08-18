@@ -14,6 +14,8 @@ import Negocio.NObra;
 import Negocio.NProveedor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
 
@@ -68,13 +70,13 @@ public class VRecepcionMateriales extends javax.swing.JFrame {
         Transportista = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        Fecha = new javax.swing.JTextField();
         TxtMateriales = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         TablaMateriales = new javax.swing.JTable();
         __REGISTRAR = new javax.swing.JButton();
         txtSalir = new javax.swing.JButton();
+        txtFecha = new com.toedter.calendar.JDateChooser();
 
         setTitle("Recepcion de Materiales");
 
@@ -126,7 +128,7 @@ public class VRecepcionMateriales extends javax.swing.JFrame {
 
         jLabel8.setText("Transportista");
 
-        jLabel9.setText("fecha");
+        jLabel9.setText("Fecha");
 
         TxtMateriales.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -169,9 +171,7 @@ public class VRecepcionMateriales extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9)
-                        .addGap(67, 67, 67)
-                        .addComponent(Fecha)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(279, 279, 279))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -183,34 +183,35 @@ public class VRecepcionMateriales extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(70, 70, 70)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(NroNotaRecepcion)
-                                            .addComponent(Combo_Obra, 0, 142, Short.MAX_VALUE))
-                                        .addGap(55, 55, 55)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel6)
-                                            .addComponent(jLabel7)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addGap(94, 94, 94)
                                                 .addComponent(Combo_Proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addComponent(jLabel4))
                                         .addGap(55, 55, 55)
-                                        .addComponent(jLabel8)))
+                                        .addComponent(jLabel8))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(70, 70, 70)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(NroNotaRecepcion)
+                                            .addComponent(Combo_Obra, 0, 142, Short.MAX_VALUE)
+                                            .addComponent(txtFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(55, 55, 55)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel7))))
                                 .addGap(31, 31, 31)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(Transportista, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
                                     .addComponent(IngenieroObra, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(NroNotaRemision, javax.swing.GroupLayout.Alignment.TRAILING))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel10)
                                 .addGap(18, 18, 18)
-                                .addComponent(TxtMateriales, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                                .addComponent(TxtMateriales)
                                 .addGap(178, 178, 178))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -219,19 +220,17 @@ public class VRecepcionMateriales extends javax.swing.JFrame {
                                         .addGap(38, 38, 38)
                                         .addComponent(txtSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(20, Short.MAX_VALUE))))))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(12, 12, 12)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel9))
+                    .addComponent(txtFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -259,7 +258,7 @@ public class VRecepcionMateriales extends javax.swing.JFrame {
                         .addComponent(IngenieroObra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Transportista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -289,6 +288,44 @@ public class VRecepcionMateriales extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSalirActionPerformed
+        this.setVisible(false);
+        this.dispose();
+        this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+    }//GEN-LAST:event_txtSalirActionPerformed
+
+    private void __REGISTRARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event___REGISTRARActionPerformed
+        int codobra= obra.BuscarId((String) Combo_Obra.getSelectedItem());
+        int codproveedor= proveedor.BuscarId((String) Combo_Proveedor.getSelectedItem());
+        Date dia= txtFecha.getDate();
+        SimpleDateFormat formato=new SimpleDateFormat("dd/mm/yyyy");
+        String Fecha= String.valueOf(formato.format(dia));
+        notaRecepcion.setNota_Recepcion(Integer.parseInt(NroNotaRecepcion.getText()),codobra,codproveedor,Fecha,IngenieroObra.getText(),Integer.parseInt(NroNotaRemision.getText()),Transportista.getText());
+        int i=0;
+        while((TablaRecepcion.getValueAt(i,2) != null) && (TablaRecepcion.getValueAt(i,3)!=null) && i<TablaRecepcion.getRowCount()){
+            int codmat = Integer.parseInt( (String) TablaRecepcion.getValueAt(i,0));
+            String unidad = (String) TablaRecepcion.getValueAt(i,2);
+            int cantidad =Integer.parseInt(  (String) TablaRecepcion.getValueAt(i,3));
+            notaRecepcion.setDDetalle_Ficha(Integer.parseInt(NroNotaRecepcion.getText()), codmat, unidad,cantidad);
+            inventario.setFicha_Obra(Integer.parseInt(NroNotaRecepcion.getText()), codmat, unidad, cantidad);
+            i++;
+        }
+    }//GEN-LAST:event___REGISTRARActionPerformed
+
+    private void TxtMaterialesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtMaterialesKeyTyped
+        TxtMateriales.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(final KeyEvent e) {
+                String cadena = (TxtMateriales.getText());
+                TxtMateriales.setText(cadena);
+                repaint();
+                filtro();
+            }
+        });
+        trsfiltro = new TableRowSorter(TablaMateriales.getModel());
+        TablaMateriales.setRowSorter(trsfiltro);
+    }//GEN-LAST:event_TxtMaterialesKeyTyped
+
     private void Combo_ProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Combo_ProveedorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_Combo_ProveedorActionPerformed
@@ -297,41 +334,6 @@ public class VRecepcionMateriales extends javax.swing.JFrame {
 trsfiltro.setRowFilter(RowFilter.regexFilter(TxtMateriales.getText(), 1));
 }
     
-    private void TxtMaterialesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtMaterialesKeyTyped
-              TxtMateriales.addKeyListener(new KeyAdapter() {
-@Override
-public void keyReleased(final KeyEvent e) {
-String cadena = (TxtMateriales.getText());
-TxtMateriales.setText(cadena);
-repaint();
-filtro();
-}
-});
-trsfiltro = new TableRowSorter(TablaMateriales.getModel());
-TablaMateriales.setRowSorter(trsfiltro);
-    }//GEN-LAST:event_TxtMaterialesKeyTyped
-
-    private void __REGISTRARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event___REGISTRARActionPerformed
-    int codobra= obra.BuscarId((String) Combo_Obra.getSelectedItem());
-      int codproveedor= proveedor.BuscarId((String) Combo_Proveedor.getSelectedItem());
-      notaRecepcion.setNota_Recepcion(Integer.parseInt(NroNotaRecepcion.getText()),codobra,codproveedor,Fecha.getText(),IngenieroObra.getText(),Integer.parseInt(NroNotaRemision.getText()),Transportista.getText());
-        int i=0; 
-        while((TablaRecepcion.getValueAt(i,2) != null) && (TablaRecepcion.getValueAt(i,3)!=null) && i<TablaRecepcion.getRowCount()){
-       int codmat = Integer.parseInt( (String) TablaRecepcion.getValueAt(i,0));
-            String unidad = (String) TablaRecepcion.getValueAt(i,2);
-       int cantidad =Integer.parseInt(  (String) TablaRecepcion.getValueAt(i,3));
-     notaRecepcion.setDDetalle_Ficha(Integer.parseInt(NroNotaRecepcion.getText()), codmat, unidad,cantidad);
-     inventario.setFicha_Obra(Integer.parseInt(NroNotaRecepcion.getText()), codmat, unidad, cantidad);
-       i++;
-        }
-    }//GEN-LAST:event___REGISTRARActionPerformed
-
-    private void txtSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSalirActionPerformed
-        this.setVisible(false);
-       this.dispose();
-       this.setDefaultCloseOperation(HIDE_ON_CLOSE);
-    }//GEN-LAST:event_txtSalirActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -368,17 +370,16 @@ TablaMateriales.setRowSorter(trsfiltro);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JComboBox Combo_Obra;
-    public javax.swing.JComboBox Combo_Proveedor;
-    public javax.swing.JTextField Fecha;
-    public javax.swing.JTextField IngenieroObra;
-    public javax.swing.JTextField NroNotaRecepcion;
-    public javax.swing.JTextField NroNotaRemision;
-    public javax.swing.JTable TablaMateriales;
-    public javax.swing.JTable TablaRecepcion;
-    public javax.swing.JTextField Transportista;
-    public javax.swing.JTextField TxtMateriales;
-    public javax.swing.JButton __REGISTRAR;
+    private javax.swing.JComboBox Combo_Obra;
+    private javax.swing.JComboBox Combo_Proveedor;
+    private javax.swing.JTextField IngenieroObra;
+    private javax.swing.JTextField NroNotaRecepcion;
+    private javax.swing.JTextField NroNotaRemision;
+    private javax.swing.JTable TablaMateriales;
+    private javax.swing.JTable TablaRecepcion;
+    private javax.swing.JTextField Transportista;
+    private javax.swing.JTextField TxtMateriales;
+    private javax.swing.JButton __REGISTRAR;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
@@ -391,6 +392,7 @@ TablaMateriales.setRowSorter(trsfiltro);
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    public javax.swing.JButton txtSalir;
+    public com.toedter.calendar.JDateChooser txtFecha;
+    private javax.swing.JButton txtSalir;
     // End of variables declaration//GEN-END:variables
 }

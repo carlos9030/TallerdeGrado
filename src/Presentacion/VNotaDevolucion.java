@@ -6,12 +6,15 @@
 
 package Presentacion;
 
+import Dato.DFicha_Obra_Materiales;
 import Negocio.NEmpleado;
+import Negocio.NFicha_Obra_Materiales;
 import Negocio.NMateriales;
 import Negocio.NNotaDevolucion;
 import Negocio.NUsuario;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.LinkedList;
 import javax.swing.ImageIcon;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
@@ -25,6 +28,7 @@ public class VNotaDevolucion extends javax.swing.JFrame {
     NUsuario usuario = new NUsuario();
     NMateriales materiales = new NMateriales();
     NNotaDevolucion notaDevolucion = new NNotaDevolucion();
+    NFicha_Obra_Materiales inentario= new NFicha_Obra_Materiales();
     TableRowSorter trsfiltro;
     
     /**
@@ -242,7 +246,8 @@ public class VNotaDevolucion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-       int codempleado= empleado.BuscarId((String) Combo_Empleado.getSelectedItem());
+       
+        int codempleado= empleado.BuscarId((String) Combo_Empleado.getSelectedItem());
         notaDevolucion.setNotaDevulucion(Integer.parseInt(txtNroNota.getText()),codempleado,usuario.BuscarId((String) Combo_Usuario.getSelectedItem()),txtFecha.getText());
         int i=0; 
         while((TablaRecepcion.getValueAt(i,2) != null) && (TablaRecepcion.getValueAt(i,3)!=null) && i<TablaRecepcion.getRowCount()){
@@ -251,6 +256,8 @@ public class VNotaDevolucion extends javax.swing.JFrame {
        int cantidad =Integer.parseInt(  (String) TablaRecepcion.getValueAt(i,3));
        String estado = (String) TablaRecepcion.getValueAt(i, 4);
        notaDevolucion.setDetalleDevolucion(codmat,Integer.parseInt(txtNroNota.getText()),unidad,cantidad,estado);
+          LinkedList<DFicha_Obra_Materiales> buscarMaterial = inentario.buscarMaterial(codmat);
+       inentario.Modificar(buscarMaterial.getFirst().getIdFicha_Obra_Materiales(),buscarMaterial.getFirst().getCantidad()+cantidad);
        i++;
         }
     }//GEN-LAST:event_btnGuardarActionPerformed

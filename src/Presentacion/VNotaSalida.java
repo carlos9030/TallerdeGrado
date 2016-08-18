@@ -6,11 +6,14 @@
 
 package Presentacion;
 
+import Negocio.NFicha_Obra_Materiales;
 import Negocio.NMateriales;
 import Negocio.NNotaSalida;
 import Negocio.NObra;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
 
@@ -21,6 +24,7 @@ import javax.swing.table.TableRowSorter;
 public class VNotaSalida extends javax.swing.JFrame {
 NMateriales nmateriales;
 NNotaSalida nnotasalida;
+NFicha_Obra_Materiales ficha;
 NObra nobra;
 TableRowSorter trsfiltro;
     /**
@@ -32,18 +36,16 @@ TableRowSorter trsfiltro;
          nmateriales=new NMateriales();
          nnotasalida= new NNotaSalida();
          nobra=  new NObra();
+         ficha= new NFicha_Obra_Materiales();
         TablaMateriales.setModel(nmateriales.ListaTabla());
          CargarComboObra();
         Actualizate();
     }
 
      public void Actualizate() {
+      txtNroNota.setText("");
+      txtTransportista.setText("");
       
-      /*  Id.setText("");
-        Nombres.setText("");
-        Apellidos.setText("");
-        Telefono.setText("");
-        Direccion.setText("");*/
     }
      
      public void CargarComboObra(){
@@ -68,7 +70,6 @@ TableRowSorter trsfiltro;
         txtTransportista = new javax.swing.JTextField();
         jLabel47 = new javax.swing.JLabel();
         jLabel48 = new javax.swing.JLabel();
-        txtfecha = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         TablaMateriales = new javax.swing.JTable();
         TxtMateriales = new javax.swing.JTextField();
@@ -80,6 +81,7 @@ TableRowSorter trsfiltro;
         jLabel49 = new javax.swing.JLabel();
         txtNroNota = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        txtFecha = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Salida de Materiales");
@@ -93,7 +95,7 @@ TableRowSorter trsfiltro;
 
         jLabel47.setText("Transportista");
 
-        jLabel48.setText("fecha");
+        jLabel48.setText("Fecha");
 
         TablaMateriales.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -192,8 +194,8 @@ TableRowSorter trsfiltro;
                                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addGroup(jPanel6Layout.createSequentialGroup()
                                                 .addComponent(jLabel48)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(txtfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(67, 67, 67)
+                                                .addComponent(txtFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(jPanel6Layout.createSequentialGroup()
                                                     .addComponent(jLabel44)
@@ -228,22 +230,26 @@ TableRowSorter trsfiltro;
                         .addComponent(Combo_obra_destino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel10)
-                        .addComponent(TxtMateriales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel47)
-                        .addComponent(txtTransportista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel48)
-                        .addComponent(txtfecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(23, 23, 23)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(GuardarNota)
-                    .addComponent(jButton1))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel10)
+                                .addComponent(TxtMateriales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel47)
+                                .addComponent(txtTransportista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel48)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(23, 23, 23)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(GuardarNota)
+                            .addComponent(jButton1)))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -285,13 +291,17 @@ TablaMateriales.setRowSorter(trsfiltro);
     }//GEN-LAST:event_TxtMaterialesKeyTyped
 
     private void GuardarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarNotaActionPerformed
-       nnotasalida.setNotaSalida( Integer.parseInt(txtNroNota.getText()),nobra.BuscarId((String) Combo_Obra_Salida.getSelectedItem()),(String) Combo_obra_destino.getSelectedItem(),txtTransportista.getText(),txtfecha.getText());
+       Date dia= txtFecha.getDate();
+        SimpleDateFormat formato=new SimpleDateFormat("dd/mm/yyyy");
+        String Fecha= String.valueOf(formato.format(dia));
+        nnotasalida.setNotaSalida( Integer.parseInt(txtNroNota.getText()),nobra.BuscarId((String) Combo_Obra_Salida.getSelectedItem()),(String) Combo_obra_destino.getSelectedItem(),txtTransportista.getText(),Fecha);
         int i=0; 
         while((TablaRecepcion.getValueAt(i,2) != null) && (TablaRecepcion.getValueAt(i,3)!=null) && i<TablaRecepcion.getRowCount()){
        int codmat = Integer.parseInt( (String) TablaRecepcion.getValueAt(i,0));
             String unidad = (String) TablaRecepcion.getValueAt(i,2);
        int cantidad =Integer.parseInt(  (String) TablaRecepcion.getValueAt(i,3));
      nnotasalida.setDetalleSalida(Integer.parseInt(txtNroNota.getText()), codmat, unidad,cantidad);
+     ficha.peps(codmat, cantidad);
        i++;
         }
     }//GEN-LAST:event_GuardarNotaActionPerformed
@@ -353,8 +363,8 @@ TablaMateriales.setRowSorter(trsfiltro);
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    public com.toedter.calendar.JDateChooser txtFecha;
     public javax.swing.JTextField txtNroNota;
     public javax.swing.JTextField txtTransportista;
-    public javax.swing.JTextField txtfecha;
     // End of variables declaration//GEN-END:variables
 }

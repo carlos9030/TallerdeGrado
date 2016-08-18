@@ -6,7 +6,9 @@
 
 package Presentacion;
 
+import Dato.DFicha_Obra_Materiales;
 import Negocio.NEmpleado;
+import Negocio.NFicha_Obra_Materiales;
 import Negocio.NMateriales;
 import Negocio.NNotaPrestamo;
 import Negocio.NObra;
@@ -14,6 +16,9 @@ import Negocio.NProveedor;
 import Negocio.NUsuario;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedList;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
 
@@ -26,6 +31,7 @@ NMateriales nmateriales;
 NEmpleado nempleado;
 NUsuario nusuario;
     NNotaPrestamo notaPrestamo = new NNotaPrestamo();
+    NFicha_Obra_Materiales inventario= new NFicha_Obra_Materiales();
     private TableRowSorter trsfiltro;
     /**
      * Creates new form VNotaPrestamo
@@ -74,7 +80,6 @@ trsfiltro.setRowFilter(RowFilter.regexFilter(TxtMateriales.getText(), 1));
         jLabel5 = new javax.swing.JLabel();
         txtNroNotaPrestamo = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        txtFecha = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaPrestamo = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -83,6 +88,7 @@ trsfiltro.setRowFilter(RowFilter.regexFilter(TxtMateriales.getText(), 1));
         jLabel10 = new javax.swing.JLabel();
         GuardarNota = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setTitle("Prestamo");
 
@@ -194,18 +200,19 @@ trsfiltro.setRowFilter(RowFilter.regexFilter(TxtMateriales.getText(), 1));
                                     .addComponent(jLabel3))))
                         .addGap(0, 51, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(90, 90, 90)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNroNotaPrestamo)
-                            .addComponent(Combo_Usuario, 0, 142, Short.MAX_VALUE))
-                        .addGap(41, 41, 41)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel9))
-                        .addGap(33, 33, 33)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Combo_Empleado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGap(90, 90, 90)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtNroNotaPrestamo)
+                                    .addComponent(Combo_Usuario, 0, 142, Short.MAX_VALUE))
+                                .addGap(41, 41, 41)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel9))
+                                .addGap(33, 33, 33)
+                                .addComponent(Combo_Empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(TxtMateriales, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(43, 43, 43))))
@@ -215,11 +222,12 @@ trsfiltro.setRowFilter(RowFilter.regexFilter(TxtMateriales.getText(), 1));
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(12, 12, 12)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtNroNotaPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(txtNroNotaPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9))
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Combo_Usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -267,7 +275,10 @@ trsfiltro.setRowFilter(RowFilter.regexFilter(TxtMateriales.getText(), 1));
     private void GuardarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarNotaActionPerformed
        int codempleado=nempleado.BuscarId((String) Combo_Empleado.getSelectedItem());
        int codusuario=nusuario.BuscarId((String) Combo_Usuario.getSelectedItem());
-        notaPrestamo.setNota_Prestamo(Integer.parseInt(txtNroNotaPrestamo.getText()),codempleado,codusuario,txtFecha.getText());
+         Date dia= jDateChooser1.getDate();
+        SimpleDateFormat formato=new SimpleDateFormat("dd/mm/yyyy");
+        String Fecha= String.valueOf(formato.format(dia));
+        notaPrestamo.setNota_Prestamo(Integer.parseInt(txtNroNotaPrestamo.getText()),codempleado,codusuario,Fecha);
         int i=0; 
         while((TablaPrestamo.getValueAt(i,2) != null) && (TablaPrestamo.getValueAt(i,3)!=null) && i<TablaPrestamo.getRowCount()){
        int codmat = Integer.parseInt( (String) TablaPrestamo.getValueAt(i,0));
@@ -275,6 +286,8 @@ trsfiltro.setRowFilter(RowFilter.regexFilter(TxtMateriales.getText(), 1));
        int cantidad =Integer.parseInt(  (String) TablaPrestamo.getValueAt(i,3));
         String tipo = (String) TablaPrestamo.getValueAt(i,4);
      notaPrestamo.setDDetallePrestamo(codmat,Integer.parseInt(txtNroNotaPrestamo.getText()),unidad,cantidad,tipo);
+      LinkedList<DFicha_Obra_Materiales> buscarMaterial = inventario.buscarMaterial(codmat);
+       inventario.Modificar(buscarMaterial.getFirst().getIdFicha_Obra_Materiales(),buscarMaterial.getFirst().getCantidad()-cantidad);
        i++;
         }
     }//GEN-LAST:event_GuardarNotaActionPerformed
@@ -337,6 +350,7 @@ TablaMateriales.setRowSorter(trsfiltro);
     public javax.swing.JTable TablaPrestamo;
     public javax.swing.JTextField TxtMateriales;
     public javax.swing.JButton btnSalir;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
@@ -346,7 +360,6 @@ TablaMateriales.setRowSorter(trsfiltro);
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    public javax.swing.JTextField txtFecha;
     public javax.swing.JTextField txtNroNotaPrestamo;
     // End of variables declaration//GEN-END:variables
 }

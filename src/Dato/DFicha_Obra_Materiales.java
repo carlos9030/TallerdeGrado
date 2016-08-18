@@ -8,6 +8,7 @@ package Dato;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.LinkedList;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -28,6 +29,14 @@ public class DFicha_Obra_Materiales {
     }
 
     public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public DFicha_Obra_Materiales(int idFicha_Obra_Materiales, int NotaRecepcion_idNotaRecepcion, int Materiales_IdMaterial, String unidad, int cantidad) {
+        this.idFicha_Obra_Materiales = idFicha_Obra_Materiales;
+        this.NotaRecepcion_idNotaRecepcion = NotaRecepcion_idNotaRecepcion;
+        this.Materiales_IdMaterial = Materiales_IdMaterial;
+        this.unidad = unidad;
         this.cantidad = cantidad;
     }
     
@@ -87,7 +96,7 @@ public class DFicha_Obra_Materiales {
       
     public DefaultTableModel MostrarTabla(){
        String dato ="select f.idFicha_Obra_Materiales, nr.idNotaRecepcion,m.idmaterial, m.descripcion,m.marca,m.categoria,dr.unidad,f.cantidad from materiales m inner join detallerecepcion dr on m.idmaterial=dr.materiales_idmaterial inner join notarecepcion nr on nr.idNotaRecepcion=dr.NotaRecepcion_idNotaRecepcion inner join ficha_obra_materiales f on f.NotaRecepcion_idNotaRecepcion=nr.idNotaRecepcion and f.Materiales_IdMaterial=dr.materiales_idmaterial";
-      String[] columnNames = {"Nro Ficha","Nro Nota Recepcion","Codigo Material","Descripcion","Marca","Categoria","Unidad","Pzas"};
+      String[] columnNames = {"Nro Ficha","Nro Nota Recepcion","Codigo Material","Descripcion","Marca","Categoria","Unidad","Cantidad"};
         DefaultTableModel tabla = new DefaultTableModel(columnNames, 0); 
         Statement Consulta;
         ResultSet resultado=null;
@@ -105,6 +114,33 @@ public class DFicha_Obra_Materiales {
                 tabla.setValueAt(resultado.getObject(6).toString(), i, 5);
                 tabla.setValueAt(resultado.getObject(7).toString(), i, 6);
                 tabla.setValueAt(resultado.getObject(8).toString(), i, 7);
+                i++;
+                
+            }
+            Consulta.close();
+           
+       } catch (Exception e) {
+            System.out.println("no se pudo CARGAR LOS DATOS TABLA MATERIALES");
+       }
+      return tabla;
+    }
+    
+        public DefaultTableModel MostrarTablaTotal(){
+       String dato ="SELECT fm.Materiales_IdMaterial,m.descripcion ,m.marca, sum(Cantidad) as Cantidad_total FROM ficha_obra_materiales fm inner join materiales m on m.idmaterial=fm.materiales_idmaterial group by m.idmaterial";
+      String[] columnNames = {"Codigo Material","Descripcion","Marca","Cantidad"};
+        DefaultTableModel tabla = new DefaultTableModel(columnNames, 0); 
+        Statement Consulta;
+        ResultSet resultado=null;
+        try {
+           Consulta=(Statement) con.getConexion().createStatement();
+           resultado=Consulta.executeQuery(dato);
+            int i =0;
+            while(resultado.next()){
+                tabla.setRowCount(tabla.getRowCount()+1);
+                tabla.setValueAt(resultado.getObject(1).toString(), i, 0);
+                tabla.setValueAt(resultado.getObject(2).toString(), i, 1);
+                tabla.setValueAt(resultado.getObject(3).toString(), i, 2);
+                tabla.setValueAt(resultado.getObject(4).toString(), i, 3);
                 i++;
                 
             }
@@ -135,6 +171,41 @@ public class DFicha_Obra_Materiales {
 
        }
        return x;
+    }
+    
+    public LinkedList<DFicha_Obra_Materiales> buscar(int materiales){
+    LinkedList<DFicha_Obra_Materiales> l = new LinkedList<>();
+    Statement Consulta;
+       //String dato ="insert into genero values ("+String.valueOf(nro)+",'"+nombre+"');";
+       String dato = "select * from ficha_obra_materiales where Materiales_IdMaterial = " + materiales; 
+       try {
+           Consulta=(Statement) con.getConexion().createStatement();
+         ResultSet resultado = Consulta.executeQuery(dato);
+           while (resultado.next()) {
+               l.add( new DFicha_Obra_Materiales(resultado.getInt(1),resultado.getInt(2),resultado.getInt(3),resultado.getString(4),resultado.getInt(5)));
+               
+           }
+           Consulta.close();
+           System.out.println("los datos se GUARDARON con exito...");
+       } catch (Exception e) {
+           System.out.println("no se puede GUARDAR TABLA FICHA OBRA MATERIALES");
+
+       }
+       return l;
+    } 
+    
+    public void modificar_Cantidad(int idmaterial , int cant){
+     Statement Consulta;
+       String dato ="update ficha_obra_materiales set cantidad= "+String.valueOf(cant)+" where idFicha_Obra_Materiales= "+String.valueOf(idmaterial)+";";
+       try {
+           Consulta=(Statement) con.getConexion().createStatement();
+           Consulta.execute(dato);
+           Consulta.close();
+           System.out.println("los datos se MODIFICARON con exito...");
+       } catch (Exception e) {
+           System.out.println("no se puede MODIFICAR TABLA CONTRATISTA");
+
+       }
     }
     
 }

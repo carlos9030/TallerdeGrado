@@ -11,6 +11,8 @@ import Negocio.NNotaPedido;
 import Negocio.NObra;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
 
@@ -59,13 +61,13 @@ NObra nobra;
         txtIngenieroObra = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        txtFecha = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         TablaMateriales = new javax.swing.JTable();
         TxtMateriales = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         GuardarNota = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Nota de Pedido");
@@ -149,10 +151,10 @@ NObra nobra;
                             .addComponent(jLabel5)
                             .addComponent(jLabel3))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Combo_Obra, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNroPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Combo_Obra, 0, 142, Short.MAX_VALUE)
+                            .addComponent(txtNroPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(102, 102, 102)
@@ -193,9 +195,9 @@ NObra nobra;
                         .addGap(22, 66, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtNroPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -249,7 +251,10 @@ NObra nobra;
 
     private void GuardarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarNotaActionPerformed
           int codobra= nobra.BuscarId((String) Combo_Obra.getSelectedItem());
-        notaPedido.setNota_Pedido(Integer.parseInt(txtNroPedido.getText()),codobra,txtObservacion.getText(),txtIngenieroObra.getText(),txtFecha.getText());
+          Date dia= jDateChooser1.getDate();
+        SimpleDateFormat formato=new SimpleDateFormat("dd/mm/yyyy");
+        String Fecha= String.valueOf(formato.format(dia));
+        notaPedido.setNota_Pedido(Integer.parseInt(txtNroPedido.getText()),codobra,txtObservacion.getText(),txtIngenieroObra.getText(),Fecha);
         int i=0; 
         while((tablaPedido.getValueAt(i,2) != null) && (tablaPedido.getValueAt(i,3)!=null) && i<tablaPedido.getRowCount()){
        int codmat = Integer.parseInt( (String) tablaPedido.getValueAt(i,0));
@@ -319,6 +324,7 @@ TablaMateriales.setRowSorter(trsfiltro);
     public javax.swing.JTable TablaMateriales;
     public javax.swing.JTextField TxtMateriales;
     public javax.swing.JButton btnSalir;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
@@ -330,7 +336,6 @@ TablaMateriales.setRowSorter(trsfiltro);
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JTable tablaPedido;
-    public javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtIngenieroObra;
     private javax.swing.JTextField txtNroPedido;
     private javax.swing.JTextField txtObservacion;
